@@ -1,10 +1,11 @@
-package newbank.client;
+package newbankapp_client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class ExampleClient extends Thread{
@@ -24,8 +25,8 @@ public class ExampleClient extends Thread{
 			public void run() {
 				try {
 					while(true) {
-						String responce = bankServerIn.readLine();
-						System.out.println(responce);
+						String response = bankServerIn.readLine();
+						System.out.println(response);
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -42,6 +43,16 @@ public class ExampleClient extends Thread{
 			try {
 				while(true) {
 					String command = userInput.readLine();
+					if (command.equals("EXIT")) {
+						try {
+							System.out.println("Terminating banking client.");
+							server.close();
+							System.exit(0);
+						}
+						catch (SocketException e) {
+							//closed.
+						}
+					}
 					bankServerOut.println(command);
 				}				
 			} catch (IOException e) {
