@@ -27,7 +27,7 @@ public class ExampleClient extends Thread{
 					while(true) {
 						String response = bankServerIn.readLine();
 						System.out.println(response);
-						if (response == null) {
+						if (response == null) { //add guard for null
 							System.out.println("Server has closed the connection.");
 							break;
 						}
